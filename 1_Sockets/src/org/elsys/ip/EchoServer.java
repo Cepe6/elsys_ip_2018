@@ -16,10 +16,25 @@ public class EchoServer {
          Scanner in = new Scanner(clientSocket.getInputStream())) {
       String inputLine;
 
+      handleOutput(clientSocket);
       while ((inputLine = in.nextLine()) != null) {
-        out.println("Received: " + inputLine);
+        System.out.println("Received: " + inputLine);
       }
     }
+  }
+
+  private static void handleOutput(Socket socket) throws IOException {
+    PrintStream out = new PrintStream(socket.getOutputStream());
+
+    Scanner stdIn = new Scanner(System.in);
+    Thread t = new Thread(() -> {
+      String typedLine;
+      while((typedLine = stdIn.nextLine()) != null) {
+        System.out.println("Sending from server: " + typedLine);
+        out.println("Server says: " + typedLine);
+      }
+    });
+    t.start();
   }
 
 }

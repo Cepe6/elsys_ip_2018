@@ -20,13 +20,30 @@ public class EchoClient {
          Scanner stdIn = new Scanner(System.in)) {
       String userInput;
 
+      handleInput(echoSocket);
+
       while((userInput = stdIn.nextLine()) != null) {
+        System.out.println("Sent: " + userInput);
         out.println(userInput);
-        System.out.println("Echo: " + in.nextLine());
+      }
+    }
+  }
+
+  private static void handleInput(Socket socket) {
+    Thread t = new Thread(() -> {
+      String serverOutput;
+      Scanner in = null;
+      try {
+        in = new Scanner(socket.getInputStream());
+      } catch (IOException e) {
+        e.printStackTrace();
       }
 
-
-    }
+      while ((serverOutput = in.nextLine()) != null) {
+        System.out.println("Received from server: " + serverOutput);
+      }
+    });
+    t.start();
   }
 }
 
