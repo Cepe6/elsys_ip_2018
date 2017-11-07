@@ -5,18 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>My first jsp</title>
+<title>Home</title>
 </head>
 <body>
-	<p>Hello, world!</p>
-	<c:if test="${error != null}">
-		<p>${error}</p>
-	</c:if>
-	<form action="admin" method="POST">
-		Name: <input type="text" name="name"/><br />
-		Password: <input type="password" name="password"/><br />
-		<input type="submit" value="login"/>
-	</form>
+	<h1>Welcome!</h1>
 
+	<a href="/logout"><button>Logout</button></a>
 </body>
 </html>
