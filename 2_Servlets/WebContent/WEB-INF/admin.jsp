@@ -8,15 +8,6 @@
 <title>Admin</title>
 </head>
 <body>
-<form action="/user/search" type="GET">
-	<input type="text" name="search-value">
-	<select name="search-attribute">
-		<option value="name">Name</option>
-		<option value="email">Email</option>
-	</select>
-	<input type="submit" value="Search">
-</form>
-
 	<table>
 		<tr>
 			<th>ID</th>
@@ -28,14 +19,9 @@
 				<td>${user.id}</td>
 				<td>${user.name}</td>
 				<td>${user.email}</td>
-				<td><a href="/user/?id=${user.id}">Go to user page</a></td>
-				<td><a href="/user/change/?id=${user.id}"><button>Edit...</button></a></td>
-				<td><a href="/user/delete/?id=${user.id}"><button>Delete</button></a></td>
+				<td><a href="user?name=${user.name}">Go to user page</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-
-	<a href="/user/add"><button>Add new user...</button></a>
-	<a href="/logout"><button>Logout</button></a>
 </body>
 </html>

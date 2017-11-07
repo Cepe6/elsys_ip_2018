@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,10 +32,7 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		request.setAttribute("users", userService.getUsers());
-		getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp")
-				.forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -44,9 +40,9 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		request.setAttribute("users", userService.getUsers());
+		request.setAttribute("users", userService.getUsers());	
 		getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp")
-				.forward(request, response);
+			.forward(request, response);
 	}
 
 }

@@ -1,13 +1,7 @@
 package org.elsys.ip.servlet.filter;
 
-import org.elsys.ip.servlet.model.User;
-import org.elsys.ip.servlet.service.UserService;
-import org.jasypt.util.password.StrongPasswordEncryptor;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,15 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet Filter implementation class LoginFilter
  */
 public class LoginFilter implements Filter {
-
-	public UserService userService = new UserService();
 
 	/**
 	 * Default constructor.
@@ -45,50 +36,20 @@ public class LoginFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		PrintWriter out = response.getWriter();
 
+		String username = request.getParameter("name");
+		String password = request.getParameter("password");
 
-		HttpServletRequest httpReq = (HttpServletRequest) request;
-		boolean authorized = false;
-		boolean cookieFound = false;
-		String username = "";
-		String password;
-
-		username = request.getParameter("name");
-		password = request.getParameter("password");
-
-
-		//Check for cookie from request
-		Cookie[] cookies = httpReq.getCookies();
-		if (cookies != null)
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("user")) {
-					authorized = true;
-					cookieFound = true;
-				}
-			}
-
-		//If cookie not found check for user and password
-		if (!cookieFound) {
-			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-			for (User user : userService.getUsers()) {
-				if (passwordEncryptor.checkPassword(password, user.getPassword())) {
-						authorized = true;
-				}
-			}
-		}
-
+		boolean authorized = true;
+		
+		// check username and password (can be hardcoded, can use the userService)
+		// add if the person is logged in to a cookie (Google it), so that we do not check at every page
 		if (authorized) {
-			//If cookie not found create new and add to response
-			if (!cookieFound) {
-				Cookie userCookie = new Cookie("user", username);
-				HttpServletResponse httpResp = (HttpServletResponse) response;
-				httpResp.addCookie(userCookie);
-			}
-
 			chain.doFilter(request, response);
 		} else {
 			request.setAttribute("error", "Wrong username or password!");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
