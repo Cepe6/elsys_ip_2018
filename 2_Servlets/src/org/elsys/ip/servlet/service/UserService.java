@@ -3,13 +3,12 @@ package org.elsys.ip.servlet.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.elsys.ip.servlet.model.User;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 public class UserService {
-	private static HashSet<User> users = new HashSet<>();
+	private final static HashSet<User> users = new HashSet<>();
 
 	public UserService() {
 		users.add(new User(1, "admin", "admin@admin.bg", new StrongPasswordEncryptor().encryptPassword("admin")));

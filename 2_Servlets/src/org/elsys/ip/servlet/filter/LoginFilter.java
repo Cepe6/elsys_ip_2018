@@ -5,9 +5,6 @@ import org.elsys.ip.servlet.service.UserService;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginFilter implements Filter {
 
-	public UserService userService = new UserService();
+	private final UserService userService = new UserService();
 
 	/**
 	 * Default constructor.
@@ -50,7 +47,7 @@ public class LoginFilter implements Filter {
 		HttpServletRequest httpReq = (HttpServletRequest) request;
 		boolean authorized = false;
 		boolean cookieFound = false;
-		String username = "";
+		String username;
 		String password;
 
 		username = request.getParameter("name");

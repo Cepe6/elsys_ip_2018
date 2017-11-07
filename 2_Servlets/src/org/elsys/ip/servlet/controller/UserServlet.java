@@ -20,7 +20,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private UserService userService = new UserService();
+	private final UserService userService = new UserService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -42,41 +42,43 @@ public class UserServlet extends HttpServlet {
 		if(path.startsWith("/user/add")) {
 			getServletContext().getRequestDispatcher("/WEB-INF/user-add.jsp")
 					.forward(request, response);
-		} else {
+		}
 
-			//For getting edit user page
-			if (path.startsWith("/user/change")) {
-				int id = Integer.parseInt(request.getParameter("id"));
-				request.setAttribute("user", userService.getById(id));
-				getServletContext().getRequestDispatcher("/WEB-INF/user-change.jsp")
-						.forward(request, response);
-			}
+		//For getting change user page
+		else if (path.startsWith("/user/change")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			request.setAttribute("user", userService.getById(id));
+			getServletContext().getRequestDispatcher("/WEB-INF/user-change.jsp")
+					.forward(request, response);
+		}
 
-			//Delete user
-			else if (path.startsWith("/user/delete")) {
-				doDelete(request, response);
-			}
+		//Delete user
+		//QUESTION HERE: How can I trigger onDelete() when typing localhost:8080/user/delete in browser
+		else if (path.startsWith("/user/delete")) {
+			doDelete(request, response);
+		}
 
-			//Search users
-			else if(path.startsWith("/user/search")) {
-				String searchAttribute = request.getParameter("search-attribute");
-				String searchValue = request.getParameter("search-value");
-				List<User> searchResult = userService.getUsers().stream().filter(user -> (searchAttribute.equals("name") ? user.getName() : user.getEmail()).equals(searchValue)).collect(Collectors.toList());
 
-				request.setAttribute("users", searchResult);
-				getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp")
-						.forward(request, response);
-			}
+		//Search users
+		else if(path.startsWith("/user/search")) {
+			String searchAttribute = request.getParameter("search-attribute");
+			String searchValue = request.getParameter("search-value");
 
-			//Get user
-			else {
-				int id = Integer.parseInt(request.getParameter("id"));
-				User user = userService.getById(id);
-				request.setAttribute("user", user);
+			List<User> searchResult = userService.getUsers().stream().filter(user -> (searchAttribute.equals("name") ? user.getName() : user.getEmail()).equals(searchValue)).collect(Collectors.toList());
 
-				getServletContext().getRequestDispatcher("/WEB-INF/user.jsp")
-						.forward(request, response);
-			}
+			request.setAttribute("users", searchResult);
+			getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp")
+					.forward(request, response);
+		}
+
+		//Get user
+		else {
+			int id = Integer.parseInt(request.getParameter("id"));
+			User user = userService.getById(id);
+			request.setAttribute("user", user);
+
+			getServletContext().getRequestDispatcher("/WEB-INF/user.jsp")
+					.forward(request, response);
 		}
 	}
 
@@ -89,6 +91,7 @@ public class UserServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		//For editing user
+		//QUESTION HERE:How can I trigger PUT request from jsp <form>
 		if(request.getParameter("_method") != null) {
 			if (request.getParameter("_method").equals("PUT"))
 				doPut(request, response);
@@ -108,11 +111,12 @@ public class UserServlet extends HttpServlet {
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int id = Integer.parseInt(req.getParameter("id"));
+		User user = userService.getById(id);
+
 		String name = req.getParameter("changed_name");
 		String email = req.getParameter("changed_email");
 		String password = req.getParameter("changed_password");
-		int id = Integer.parseInt(req.getParameter("id"));
-		User user = userService.getById(id);
 
 		if (!name.equals("")) {
 			user.setName(name);

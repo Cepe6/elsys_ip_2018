@@ -13,6 +13,7 @@ public class LogoutServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //QUESTION HERE:Any other way to delete cookie?
         Cookie cookie = new Cookie("user", "");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
