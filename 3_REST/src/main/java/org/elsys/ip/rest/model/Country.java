@@ -86,7 +86,7 @@ public class Country {
         return religion;
     }
 
-    public String getCSVFormat() {
+    public String CSVFormat() {
         return getId().toString() + ", "
                 + getName() + ", "
                 + getCapital() + ", "

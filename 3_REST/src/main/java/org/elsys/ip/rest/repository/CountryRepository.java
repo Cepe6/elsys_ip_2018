@@ -37,8 +37,7 @@ public class CountryRepository {
      }
 
     public Country updateCountry(Integer id, Country country) {
-        int realId = id - 1;
-        countryList.set(realId, country);
+        countryList.set(id, country);
         return country;
     }
 

@@ -11,7 +11,7 @@ public class CountryService {
   private final CountryRepository countryRepository = new CountryRepository();
 
   public List<Country> getCountryList() {
-    return countryRepository.getCountryList();
+    return CountryRepository.getCountryList();
   }
 
   public Country getCountryById(Integer id) {

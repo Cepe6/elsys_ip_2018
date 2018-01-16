@@ -8,6 +8,7 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.mvc.Viewable;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -41,6 +42,13 @@ public class CountryResource {
         return countryList;
     }
 
+    @GET
+    @Path("/filter")
+    @Produces("text/html")
+    public Response filterCountries() {
+        return Response.ok(new Viewable("/WEB-INF/filtered.jsp", CountryService.getCountryList())).build();
+    }
+
     /**
      * Returns an object with the given name.
      *
@@ -69,7 +77,7 @@ public class CountryResource {
             FileWriter fw = new FileWriter(file);
             for (Country country : CountryService.getCountryList()) {
                 try {
-                    fw.write(country.getCSVFormat() + "\n");
+                    fw.write(country.CSVFormat() + "\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
