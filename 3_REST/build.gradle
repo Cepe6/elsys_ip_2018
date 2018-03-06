@@ -21,4 +21,6 @@ dependencies {
     compile "org.glassfish.jersey.ext:jersey-mvc-jsp:2.22"
     compile "com.google.guava:guava:19.0"
     compile "javax.servlet.jsp:jsp-api:2.0"
+    compile "mysql:mysql-connector-java:5.1.13"
+    compile "org.hibernate:hibernate-core:5.2.12.Final"
 }

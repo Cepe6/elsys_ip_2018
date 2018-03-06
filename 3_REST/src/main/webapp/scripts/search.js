@@ -12,7 +12,6 @@ $(function () {
         success: function (data) {
             var appendString = "<tr>";
 
-
             $.each(data[0], function (key) {
                 $("#searchFieldsSelect").append("<option class=\""+ key +"\" value=\"" + key + "\">" + key + "</option>");
                 appendString += "<td style=\"border: 1px solid black; text-align: center;\"><h4>" + key + "</h4></td>";

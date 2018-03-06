@@ -1,0 +1,35 @@
+<hibernate-mapping>
+    <class name="org.elsys.ip.rest.model.Country" table="country">
+        <id name="id" type="java.lang.Integer">
+            <column name="CountryID" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="CountryName" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="capital" type="string">
+            <column name="Capital" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="biggestCity" type="string">
+            <column name="BiggestCity" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="continent" type="string">
+            <column name="Continent" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="officialLanguage" type="string">
+            <column name="OfficialLanguage" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="ethnicGroup" type="string">
+            <column name="EthnicGroup" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="government" type="string">
+            <column name="Government" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="ruler" type="string">
+            <column name="Ruler" length="150" not-null="true" unique="false" />
+        </property>
+        <property name="religion" type="string">
+            <column name="Religion" length="150" not-null="true" unique="false" />
+        </property>
+    </class>
+</hibernate-mapping>

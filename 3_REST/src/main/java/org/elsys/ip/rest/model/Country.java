@@ -1,5 +1,6 @@
 package org.elsys.ip.rest.model;
 
+@javax.persistence.Entity(name = "Country")
 public class Country {
     private static int latestId = 0;
 
@@ -14,11 +15,56 @@ public class Country {
     private String ruler;
     private String religion;
 
+    public static void setLatestId(int latestId) {
+        Country.latestId = latestId;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
+
+    public void setBiggestCity(String biggestCity) {
+        this.biggestCity = biggestCity;
+    }
+
+    public void setContinent(String continent) {
+        this.continent = continent;
+    }
+
+    public void setOfficialLanguage(String officialLanguage) {
+        this.officialLanguage = officialLanguage;
+    }
+
+    public void setEthnicGroup(String ethnicGroup) {
+        this.ethnicGroup = ethnicGroup;
+    }
+
+    public void setGovernment(String government) {
+        this.government = government;
+    }
+
+    public void setRuler(String ruler) {
+        this.ruler = ruler;
+    }
+
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+
     public Country(String name, String capital, String biggestCity, String continent, String officialLanguage, String ethnicGroup, String government, String ruler, String religion) {
         this.id = latestId;
         latestId++;
         this.name = name;
         this.capital = capital;
+
         this.biggestCity = biggestCity;
         this.continent = continent;
         this.officialLanguage = officialLanguage;
